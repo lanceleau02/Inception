@@ -1,24 +1,21 @@
-FROM	alpine:3.17
+FROM	debian:bullseye
 
-RUN	apk update && apk upgrade
+RUN		apt update && apt upgrade -y
 
 # NGINX
-RUN	apk add --update nginx
+RUN		apt install nginx -y
 
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
 
 # OPENSSL
-RUN	mkdir -p /etc/nginx/ssl \
-	&& apk add --update openssl \
-	&& openssl req -x509 -nodes \
-	-out /etc/nginx/ssl/inception.crt \
-	-keyout /etc/nginx/ssl/inception.key \
-	-subj "/C=FR/ST=NAQ/L=Angoulême/O=42/OU=42/CN=laprieur.42.fr/UID=laprieur"
+RUN		mkdir -p /etc/nginx/ssl \
+		&& apt install openssl -y \
+		&& openssl req -x509 -nodes \
+		-out /etc/nginx/ssl/inception.crt \
+		-keyout /etc/nginx/ssl/inception.key \
+		-subj "/C=FR/ST=NAQ/L=Angoulême/O=42/OU=42/CN=laprieur.42.fr/UID=laprieur"
 
-RUN	mkdir -p /var/www/html/	\
-	&& adduser -D -g 'www' www \
-	&& chown -R www:www /run/nginx/ \
-	&& chown -R www:www /var/www/html/
+RUN		chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
 EXPOSE	443
 

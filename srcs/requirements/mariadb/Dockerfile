@@ -1,11 +1,9 @@
-FROM	alpine:3.17
+FROM	debian:bullseye
 
-RUN	apk update && apk upgrade
+RUN		apt update && apt upgrade -y
 
 # MARIADB
-RUN	apk add --update mysql \
-	&& apk add --update mariadb \
-	&& mkdir mariadb.conf.d
+RUN		apt install mariadb-server -y && mkdir mariadb.conf.d
 
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 

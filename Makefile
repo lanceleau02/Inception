@@ -1,53 +1,45 @@
-
-NAME			:= RPN
-
 # **************************************************************************** #
-#                                 INGREDIENTS                                  #
-# **************************************************************************** #
-
-SRC				:=	main.cpp	\
-					RPN.cpp		\
-					
-SRC_OBJS		:=	$(SRC:%.cpp=.build/%.o)
-DEPS			:=	$(SRC_OBJS:%.o=%.d)
-
-CXX				:=	c++
-CXXFLAGS		:=	-Wall -Wextra -Werror -std=c++98 -g
-CPPFLAGS		:=	-MP -MMD
-LDFLAGS			:=
-
-# **************************************************************************** #
-#                                    TOOLS                                     #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: laprieur <laprieur@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/12/05 16:29:19 by laprieur          #+#    #+#              #
+#    Updated: 2023/12/05 19:22:19 by laprieur         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
-MAKEFLAGS		+= --silent --no-print-directory
+# **************************************************************************** #
+#                                    PATHS                                     #
+# **************************************************************************** #
+
+YML_PATH	:= srcs/docker-compose.yml
+DATA_PATH	:= /home/lprieure/data
 
 # **************************************************************************** #
 #                                   RECIPES                                    #
 # **************************************************************************** #
 
-all: header $(NAME)
+all: header build
 
-$(NAME): $(SRC_OBJS)
-	$(CXX) $(CXXFLAGS) $(SRC_OBJS) $(LDFLAGS) -o $(NAME)
-	@printf "%b" "$(BLUE)CREATED $(CYAN)$(NAME)\n"
+build:
+	docker-compose -f $(YML_PATH) up --build
 
-.build/%.o: %.cpp
-	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c $(CPPFLAGS) $< -o $@
-	@printf "%b" "$(BLUE)CREATED $(CYAN)$@\n"
+stop:
+	docker-compose -f $(YML_PATH) stop
 
--include $(DEPS)
+start:
+	docker-compose -f $(YML_PATH) start
+
+restart: clean build
 
 clean:
-	rm -rf .build
+	docker-compose -f $(YML_PATH) down -v
 
-fclean: clean
-	rm -rf $(NAME)
-
-re:
-	$(MAKE) fclean
-	$(MAKE) all
+fclean:
+	sudo rm -rf $(DATA_PATH)/*/*
+	docker system prune -af
 
 # **************************************************************************** #
 #                                    STYLE                                     #
@@ -61,21 +53,14 @@ OFF				:= \033[m
 
 header:
 	@printf "%b" "$(GREEN)"
-	@echo "   ____ ____  ____    __  __           _       _         ___   ___	"
-	@echo "  / ___|  _ \|  _ \  |  \/  | ___   __| |_   _| | ___   / _ \ / _ \	"
-	@echo " | |   | |_) | |_) | | |\/| |/ _ \ / _  | | | | |/ _ \ | | | | (_) |	"
-	@echo " | |___|  __/|  __/  | |  | | (_) | (_| | |_| | |  __/ | |_| |\__  |	"
-	@echo "  \____|_|   |_|     |_|  |_|\___/ \____|\____|_|\___|  \___/   /_/	"
-	@echo "			     by laprieur											"
+	@echo "	___                      _   _						"
+	@echo "       |_ _|____   ___ ___ ____ | |_(_) ___  ____	"
+	@echo "	| ||  _ \ / __/ _ \  _ \| __| |/ _ \|  _ \			"
+	@echo "	| || | | | (_|  __/ |_) | |_| | (_) | | | |			"
+	@echo "       |___|_| |_|\___\___|  __/ \__|_|\___/|_| |_|	"
+	@echo "			  |_|by laprieur           					"
 	@echo
-	@printf "%b" "$(CYAN)CXX:      $(YELLOW)$(CXX)\n"
-	@printf "%b" "$(CYAN)CXXFlags: $(YELLOW)$(CXXFLAGS)\n"
+	@printf "%b" "$(CYAN)Compose path:	$(YELLOW)$(YML_PATH)\n"
+	@printf "%b" "$(CYAN)Data path:	$(YELLOW)$(DATA_PATH)\n"
 	@printf "%b" "$(OFF)"
 	@echo
-
-# **************************************************************************** #
-#                                   SPECIAL                                    #
-# **************************************************************************** #
-
-.PHONY: all clean fclean re
-.DELETE_ON_ERROR:
