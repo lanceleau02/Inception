@@ -1,9 +1,9 @@
 FROM	debian:bullseye
 
-RUN		apt update && apt upgrade -y
+RUN	apt update && apt upgrade -y
 
 # MARIADB
-RUN		apt install mariadb-server -y && mkdir mariadb.conf.d
+RUN	apt install mariadb-server netcat -y && mkdir mariadb.conf.d
 
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
@@ -11,4 +11,6 @@ COPY	conf/script.sh /script.sh
 
 EXPOSE	3306
 
-CMD	[ "sh", "script.sh" ]
+ENTRYPOINT [ "sh", "script.sh" ]
+
+CMD	[ "/usr/sbin/mysqld", "--bind-address=0.0.0.0" ]
