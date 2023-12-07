@@ -24,7 +24,7 @@ DATA_PATH	:= /home/laprieur/data
 all: header build
 
 build:
-	docker-compose -f $(YML_PATH) up --build
+	docker-compose -f $(YML_PATH) up --build -d
 
 stop:
 	docker-compose -f $(YML_PATH) stop
@@ -37,7 +37,7 @@ restart: clean build
 clean:
 	docker-compose -f $(YML_PATH) down -v
 
-fclean:
+fclean: clean
 	sudo rm -rf $(DATA_PATH)/*/*
 	docker system prune -af
 

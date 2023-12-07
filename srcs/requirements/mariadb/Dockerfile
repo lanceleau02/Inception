@@ -12,5 +12,3 @@ COPY	conf/script.sh /script.sh
 EXPOSE	3306
 
 ENTRYPOINT [ "sh", "script.sh" ]
-
-CMD	[ "/usr/sbin/mysqld", "--bind-address=0.0.0.0" ]
