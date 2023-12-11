@@ -1,14 +1,15 @@
 FROM	debian:bullseye
 
+# GENERAL
 RUN	apt update && apt upgrade -y
 
 # MARIADB
-RUN	apt install mariadb-server netcat -y && mkdir mariadb.conf.d
+RUN	apt install mariadb-server -y
 
-COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY	./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY	conf/script.sh /script.sh
+COPY	./tools/script.sh /script.sh
+
+CMD	[ "sh", "script.sh" ]
 
 EXPOSE	3306
-
-ENTRYPOINT [ "sh", "script.sh" ]
