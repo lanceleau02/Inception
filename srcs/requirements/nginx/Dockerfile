@@ -4,7 +4,9 @@ FROM	debian:bullseye
 RUN	apt update && apt upgrade -y
 
 # NGINX
-RUN	apt install nginx -y
+RUN	apt install nginx -y \
+	&& rm /etc/nginx/sites-available/default \
+	&& rm /etc/nginx/sites-enabled/default
 
 # SSL
 RUN	mkdir -p /etc/nginx/ssl \
