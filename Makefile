@@ -24,7 +24,7 @@ DATA_PATH	:= /home/laprieur/data
 all: header build
 
 build:
-	docker-compose -f $(YML_PATH) up --build
+	docker-compose -f $(YML_PATH) up -d --build
 
 stop:
 	docker-compose -f $(YML_PATH) stop

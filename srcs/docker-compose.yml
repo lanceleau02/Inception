@@ -53,17 +53,17 @@ volumes:
     name: wordpress
     driver: local
     driver_opts:
-      type: "none"
-      o: "bind"
-      device: "/home/laprieur/data/wordpress/"
+      type: 'none'
+      o: 'bind'
+      device: '/home/laprieur/data/wordpress/'
 
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
-      type: "none"
-      o: "bind"
-      device: "/home/laprieur/data/mariadb"
+      type: 'none'
+      o: 'bind'
+      device: '/home/laprieur/data/mariadb'
 
 networks:
 
