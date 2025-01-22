@@ -10,14 +10,14 @@
 
 ## Features
 
-1. Set up a Docker-based multi-service infrastructure using `docker-compose`.
-2. Configure services for WordPress, MariaDB, and Nginx.
-3. Secure the environment using HTTPS with SSL/TLS certificates.
-4. Isolate services into individual Docker containers.
-5. Manage persistent data with mounted volumes.
-6. Implement a custom domain name for accessing the services.
-7. Ensure proper inter-service communication within the Docker network.
-8. Automate the setup process through Docker Compose configuration files.
+- Set up a Docker-based multi-service infrastructure using `docker-compose`.
+- Configure services for WordPress, MariaDB, and Nginx.
+- Secure the environment using HTTPS with SSL/TLS certificates.
+- Isolate services into individual Docker containers.
+- Manage persistent data with mounted volumes.
+- Implement a custom domain name for accessing the services.
+- Ensure proper inter-service communication within the Docker network.
+- Automate the setup process through Docker Compose configuration files.
 
 ## License
 
